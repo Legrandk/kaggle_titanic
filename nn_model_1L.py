@@ -4,28 +4,20 @@
 
 """
 Kaggle Ranking:
-    Position: 3,342 (Top 35%)
-    Scoring: 0.78947
-
+    Scoring: 0.77990
+    
     Architecture: 
         Input:  29 features
-        Hidden: 9 neurons
-        Hidden: 9 neurons
-        Hidden: 9 neurons
+        Hidden: 5 neurons
         Output: 1 neuron
 
-    L2 Reg: 0.12
-    Weights Init: glorot_normal
-    Optimizer: Adam (LR: 0.001)
-    Epochs: 400
-    
-    >> CM: [[103  11]
-            [ 14  51]]
-    >> Train ACC: 0.830056179775
-    >> Dev ACC: 0.860335195531
-    >> Dev PREC: 0.822580645161
-    >> Dev RECALL: 0.784615384615
-    >> Dev F1_Score: 0.803149606299
+    >> Dev CM: [[104  10]
+                [ 13  52]]    
+    >> Train ACC: 0.839724208376
+    >> Dev ACC: 0.871508379888
+    >> Dev PREC: 0.838709677419
+    >> Dev RECALL: 0.8
+    >> Dev F1_Score: 0.818897637795
 """
 
 import numpy as np # linear algebra
@@ -354,19 +346,8 @@ print("X_dev.shape: {}".format(X_dev.shape))
 
 model = Sequential()
 
-model.add( Dense( units              = 9,
+model.add( Dense( units              = 5,
                   input_dim          = X_train.shape[1],
-                  kernel_regularizer = regularizers.l2( 0.12),
-                  kernel_initializer = 'glorot_normal',
-                  activation         = 'relu'))
-
-model.add( Dense( units              = 9,
-                  kernel_regularizer = regularizers.l2( 0.12),
-                  kernel_initializer = 'glorot_normal',
-                  activation         = 'relu'))
-
-model.add( Dense( units              = 9,
-                  kernel_regularizer = regularizers.l2( 0.12),
                   kernel_initializer = 'glorot_normal',
                   activation         = 'relu'))
 
@@ -381,7 +362,7 @@ model.compile( optimizer = 'adam',
 
 history = model.fit( X_train , y_train,
            batch_size = 32,
-           epochs = 400,
+           epochs = 275,
            verbose = VERBOSE)
 
 

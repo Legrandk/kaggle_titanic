@@ -4,28 +4,19 @@
 
 """
 Kaggle Ranking:
-    Position: 3,342 (Top 35%)
-    Scoring: 0.78947
-
+    Scoring: 0.76555
+    
     Architecture: 
         Input:  29 features
-        Hidden: 9 neurons
-        Hidden: 9 neurons
-        Hidden: 9 neurons
         Output: 1 neuron
-
-    L2 Reg: 0.12
-    Weights Init: glorot_normal
-    Optimizer: Adam (LR: 0.001)
-    Epochs: 400
     
     >> CM: [[103  11]
-            [ 14  51]]
-    >> Train ACC: 0.830056179775
-    >> Dev ACC: 0.860335195531
-    >> Dev PREC: 0.822580645161
-    >> Dev RECALL: 0.784615384615
-    >> Dev F1_Score: 0.803149606299
+            [ 12  53]]
+    >> Train ACC: 0.838483146067
+    >> Dev ACC: 0.871508379888
+    >> Dev PREC: 0.828125
+    >> Dev RECALL: 0.815384615385
+    >> Dev F1_Score: 0.821705426357
 """
 
 import numpy as np # linear algebra
@@ -56,7 +47,7 @@ TRAIN_CSV  = "train.csv"
 TEST_CSV   = "test.csv"
 
 OUTPUT_CSV = "survivors_prediction.csv"
-VERBOSE    = 1
+VERBOSE    = 0
 SEED       = 123
 
 #########################################################
@@ -354,23 +345,8 @@ print("X_dev.shape: {}".format(X_dev.shape))
 
 model = Sequential()
 
-model.add( Dense( units              = 9,
-                  input_dim          = X_train.shape[1],
-                  kernel_regularizer = regularizers.l2( 0.12),
-                  kernel_initializer = 'glorot_normal',
-                  activation         = 'relu'))
-
-model.add( Dense( units              = 9,
-                  kernel_regularizer = regularizers.l2( 0.12),
-                  kernel_initializer = 'glorot_normal',
-                  activation         = 'relu'))
-
-model.add( Dense( units              = 9,
-                  kernel_regularizer = regularizers.l2( 0.12),
-                  kernel_initializer = 'glorot_normal',
-                  activation         = 'relu'))
-
 model.add( Dense( units              = 1,
+                  input_dim          = X_train.shape[1],
                   kernel_initializer = 'glorot_normal',
                   activation         = 'sigmoid'))
 
@@ -378,12 +354,10 @@ model.compile( optimizer = 'adam',
                loss = 'binary_crossentropy',
                metrics = [ 'accuracy' ])
 
-
 history = model.fit( X_train , y_train,
            batch_size = 32,
-           epochs = 400,
+           epochs = 275,
            verbose = VERBOSE)
-
 
 y_hat = model.predict( X_dev)
 dev_cm, dev_acc, dev_precision, dev_recall, dev_f1_score = get_metrics( y_dev, y_hat)
@@ -391,7 +365,6 @@ dev_cm, dev_acc, dev_precision, dev_recall, dev_f1_score = get_metrics( y_dev, y
 print("")
 print(">> Train Loss: " + str( history.history['loss'][ len(history.history['loss'])-1]))
 print(">> Train ACC: " + str( history.history['acc'][ len(history.history['acc'])-1]))
-
 print(">> Dev ACC: " + str(dev_acc))
 print(">> Dev PREC: " + str(dev_precision))
 print(">> Dev RECALL: " + str(dev_recall))
