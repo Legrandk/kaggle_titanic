@@ -24,10 +24,11 @@ The best model found was ranked as 0.78947 and got the 3,342 (Top 35%) position.
     
 ## Model Performance
  * Dev Confusion Matrix
-  |    |Dead?|Surv?|
-  |----|-----|-----|
-  |Dead| 103 | 11  |
-  |Surv| 14  | 51  |
+
+|      | Dead? | Surv? |
+| ---- | ----- | ----- |
+| Dead | 103   | 11    |
+| Surv | 14    | 51    |
  * Train ACC: 0.830056179775
  * Dev ACC: 0.860335195531
  * Dev PREC: 0.822580645161
